@@ -4,6 +4,9 @@ from src.command.command_interface import CommandInvalidArgumentsError
 
 
 class CCat(ShellCommand):
+    """
+    ShellCommand implementation for 'cat' command
+    """
     def execute(self, in_stream):
         if len(self.args) == 0:
             raise CommandInvalidArgumentsError(f'"cat" takes 1 argument, given 0')

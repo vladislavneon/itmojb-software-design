@@ -10,6 +10,9 @@ class ExternalCommandError(CommandError):
 
 
 class ExternalCommand(ShellCommand):
+    """
+    ShellCommand implementation for any unknown (external) command
+    """
     def execute(self, in_stream):
         try:
             result = sbpr.run(

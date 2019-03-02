@@ -4,6 +4,9 @@ from src.io.filesystem import FileSystem
 
 
 class CWc(ShellCommand):
+    """
+    ShellCommand implementation for 'wc' command
+    """
     def execute(self, in_stream):
         if self.args:
             file_name = self.args[0]

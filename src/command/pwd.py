@@ -4,6 +4,9 @@ from src.io.filesystem import FileSystem
 
 
 class CPwd(ShellCommand):
+    """
+    ShellCommand implementation for 'pwd' command
+    """
     def execute(self, in_stream):
         ous = Stream()
         ous.write_line(FileSystem.cwd())
