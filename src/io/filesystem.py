@@ -11,14 +11,28 @@ class FileSystemFileNotExistError(ValueError):
 class FileSystem:
     @staticmethod
     def cd(path):
+        """
+        Calls OS-based command to change current working directory
+        :param path: str, path
+        """
         os.chdir(path)
 
     @staticmethod
     def cwd():
+        """
+        Returns current working directory
+        :return: str, current working directory
+        """
         return os.getcwd()
 
     @staticmethod
     def read_file(file_name='-'):
+        """
+        Reads specified file `file_name` and returns its content via Stream object
+        If `file_name` is not given then reads from standart input
+        :param file_name: str, path to file
+        :return: Stream, Stream object containing file content
+        """
         stream = Stream()
         try:
             for line in fileinput.input(file_name):
@@ -29,6 +43,11 @@ class FileSystem:
 
     @staticmethod
     def write_file(file_name, stream):
+        """
+        Writes content of Stream object to the file
+        :param file_name: str, path to the file
+        :param stream: Stream
+        """
         try:
             with open(file_name, 'w') as ouf:
                 for line in stream:

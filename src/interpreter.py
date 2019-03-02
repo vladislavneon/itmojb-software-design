@@ -25,6 +25,9 @@ class Interpreter:
         pass
 
     def run(self):
+        """
+        Runs interpreter.
+        """
         self.state.should_exit = False
         while True:
             command_text = input().strip()

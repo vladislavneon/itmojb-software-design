@@ -23,9 +23,17 @@ class Stream:
         return self.stream[self.pos]
 
     def write_line(self, line):
+        """
+        Writes given line to object content
+        :param line: str
+        """
         self.stream.append(line)
 
     def write_lines(self, lines):
+        """
+        Writes multiple given lines to object content
+        :param lines: list[str]
+        """
         for line in lines:
             self.stream.append(line)
 

@@ -12,6 +12,11 @@ class CommandParser:
         self.external_command = ExternalCommand
 
     def add_command(self, command_name, command_class):
+        """
+        Adds `command_class` to parser instance and bind it with `command_name`
+        :param command_name: str, name which be used to call the command in the interpreter
+        :param command_class: ShellCommand, class-object containing command implementation
+        """
         self.commands[command_name] = command_class
 
     def build_command(self, command_name, command_args):
@@ -58,6 +63,11 @@ class CommandParser:
         return True
 
     def parse(self, command_text):
+        """
+        Parses string `command_text` returning a sequence of commands
+        :param command_text: str, line entered by a user
+        :return: list[ShellCommand], list of commands to execute via pipeline
+        """
         tokens = self.tokenize(command_text)
         for token in tokens:
             if token.needs_substy():
