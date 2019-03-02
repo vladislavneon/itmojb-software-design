@@ -1,10 +1,6 @@
 from src.io.stream import Stream
 from src.parser.command_parser import CommandParser
-from src.command.cat import CCat
-from src.command.echo import CEcho
-from src.command.pwd import CPwd
-from src.command.exit import CExit
-from src.command.wc import CWc
+import src.command as commands
 
 
 class InterpreterState:
@@ -16,14 +12,12 @@ class Interpreter:
         if not getattr(cls, 'instance', None):
             obj = super().__new__(cls)
             obj.state = InterpreterState()
-            obj.input_stream = Stream()
-            obj.output_stream = Stream()
             obj.parser = CommandParser()
-            obj.parser.add_command('echo', CEcho)
-            obj.parser.add_command('cat', CCat)
-            obj.parser.add_command('pwd', CPwd)
-            obj.parser.add_command('exit', CExit)
-            obj.parser.add_command('wc', CWc)
+            obj.parser.add_command('echo', commands.echo.CEcho)
+            obj.parser.add_command('cat', commands.cat.CCat)
+            obj.parser.add_command('pwd', commands.pwd.CPwd)
+            obj.parser.add_command('exit', commands.exit.CExit)
+            obj.parser.add_command('wc', commands.wc.CWc)
             cls.instance = obj
         return cls.instance
 
@@ -41,5 +35,4 @@ class Interpreter:
             if Interpreter().state.should_exit:
                 print('bye')
                 break
-            print(stream.stream)
             print(stream, end='')

@@ -22,10 +22,7 @@ class CommandParser:
 
     def tokenize(self, command_text):
         tokens = shlex.shlex(command_text)
-        tokens.wordchars += '$'
-        tokens.wordchars += '_'
-        tokens.wordchars += '.'
-        tokens.wordchars += '-'
+        tokens.wordchars += '$_-./'
         token_items = []
         for token in tokens:
             if token[0] == '\'':
