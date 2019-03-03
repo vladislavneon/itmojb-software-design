@@ -18,6 +18,7 @@ class Interpreter:
             obj.parser.add_command('pwd', commands.pwd.CPwd)
             obj.parser.add_command('exit', commands.exit.CExit)
             obj.parser.add_command('wc', commands.wc.CWc)
+            obj.parser.add_command('grep', commands.grep.CGrep)
             cls.instance = obj
         return cls.instance
 
