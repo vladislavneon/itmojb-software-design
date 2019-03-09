@@ -26,6 +26,15 @@ class FileSystem:
         return os.getcwd()
 
     @staticmethod
+    def ls(path="."):
+        """
+        Returns list of files and directories in current directory or by provided path
+        :param path: str, path
+        :return: list, files and dirs in directory
+        """
+        return os.listdir(path)
+
+    @staticmethod
     def read_file(file_name='-'):
         """
         Reads specified file `file_name` and returns its content via Stream object

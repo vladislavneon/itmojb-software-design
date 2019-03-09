@@ -5,3 +5,5 @@ import src.command.external
 import src.command.pwd
 import src.command.wc
 import src.command.grep
+import src.command.cd
+import src.command.ls
