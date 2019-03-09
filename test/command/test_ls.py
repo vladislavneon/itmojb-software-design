@@ -14,7 +14,6 @@ class TestCommandParser(TestCase):
 
         interpreter = Interpreter()
         files_set = set(str(interpreter.execute("ls tmp")).strip().split('\n'))
-        print(files_set)
         true_files_set = {"dir", "file.txt"}
         self.assertEqual(true_files_set, files_set)
         os.remove("tmp/file.txt")

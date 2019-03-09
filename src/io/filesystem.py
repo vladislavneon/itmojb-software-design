@@ -10,11 +10,14 @@ class FileSystemFileNotExistError(ValueError):
 
 class FileSystem:
     @staticmethod
-    def cd(path):
+    def cd(path=None):
         """
         Calls OS-based command to change current working directory
         :param path: str, path
         """
+        if path is None:
+            path = os.getenv("HOME")
+        print(path)
         os.chdir(path)
 
     @staticmethod

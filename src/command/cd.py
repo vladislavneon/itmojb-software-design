@@ -7,7 +7,5 @@ class CCd(ShellCommand):
     ShellCommand implementation for 'cd' command
     """
     def execute(self, in_stream):
-        if len(self.args) == 0:
-            raise CommandInvalidArgumentsError(f'"cd" takes 1 argument, given 0')
-        path = self.args[0]
+        path = self.args[0] if len(self.args) > 0 else None
         FileSystem.cd(path)

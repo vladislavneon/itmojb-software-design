@@ -1,3 +1,4 @@
+import os
 from unittest import TestCase
 
 from src.interpreter import Interpreter
@@ -11,6 +12,12 @@ class TestCommandParser(TestCase):
         interpreter.execute("cd .")
         not_changed_current_dir = str(interpreter.execute("pwd"))
         self.assertEqual(current_dir, not_changed_current_dir)
+
+    def testEmptyCd(self):
+        interpreter = Interpreter()
+        interpreter.execute("cd")
+        home_dir = str(interpreter.execute("pwd")).strip()
+        self.assertEqual(os.getenv("HOME"), home_dir)
 
     def testUpDir(self):
         interpreter = Interpreter()
