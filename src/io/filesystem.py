@@ -17,7 +17,6 @@ class FileSystem:
         """
         if path is None:
             path = os.getenv("HOME")
-        print(path)
         os.chdir(path)
 
     @staticmethod

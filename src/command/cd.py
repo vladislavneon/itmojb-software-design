@@ -1,5 +1,6 @@
 from src.command.command_interface import ShellCommand, CommandInvalidArgumentsError
 from src.io.filesystem import FileSystem
+from src.io.stream import Stream
 
 
 class CCd(ShellCommand):
@@ -8,4 +9,9 @@ class CCd(ShellCommand):
     """
     def execute(self, in_stream):
         path = self.args[0] if len(self.args) > 0 else None
-        FileSystem.cd(path)
+        out_stream = Stream()
+        try:
+            FileSystem.cd(path)
+        except FileNotFoundError:
+            out_stream.write_line(f"No such file or directory: {path}")
+        return out_stream
