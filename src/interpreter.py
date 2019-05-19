@@ -26,6 +26,27 @@ class Interpreter:
     def __init__(self):
         pass
 
+    def execute(self, command_text):
+        """
+        Execute one line of commands
+        :param command_text: str, string of commands
+        :return: Stream, output stream
+        """
+        self.state.should_exit = False
+        commands = self.parser.parse(command_text)
+        stream = Stream()
+        try:
+            for com in commands:
+                stream = com.execute(stream)
+            if Interpreter().state.should_exit:
+                print('bye')
+            print(stream, end='')
+        except ExternalCommandError:
+            print('Invalid command')
+        except FileNotFoundError as e:
+            print(e)
+
+
     def run(self):
         """
         Runs interpreter.
@@ -33,16 +54,6 @@ class Interpreter:
         self.state.should_exit = False
         while True:
             command_text = input().strip()
-            commands = self.parser.parse(command_text)
-            stream = Stream()
-            try:
-                for com in commands:
-                    stream = com.execute(stream)
-                if Interpreter().state.should_exit:
-                    print('bye')
-                    break
-                print(stream, end='')
-            except ExternalCommandError:
-                print('Invalid command')
-            except FileNotFoundError as e:
-                print(e)
+            self.execute(command_text)
+            if self.state.should_exit:
+                break
