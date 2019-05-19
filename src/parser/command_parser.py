@@ -1,7 +1,7 @@
 import shlex
 import re
 from src.parser.environment import Environment
-from src.parser.token_type import Token
+from src.parser.token import Token, TokenType
 from src.command.external import ExternalCommand
 
 
@@ -31,11 +31,11 @@ class CommandParser:
         token_items = []
         for token in tokens:
             if token[0] == '\'':
-                token_items.append(Token(token[1:-1], 'quoted'))
+                token_items.append(Token(token[1:-1], TokenType.QUOTED))
             elif token[0] == '"':
-                token_items.append(Token(token[1:-1], 'd_quoted'))
+                token_items.append(Token(token[1:-1], TokenType.DOUBLE_QUOTED))
             else:
-                token_items.append(Token(token, 'plain'))
+                token_items.append(Token(token, TokenType.PLAIN))
         return token_items
 
     def substitute(self, token):
