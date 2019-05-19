@@ -6,6 +6,9 @@ from src.command.external import ExternalCommand
 
 
 class CommandParser:
+    """
+    Class for creating instances of Command from input string
+    """
     def __init__(self):
         self.env = Environment()
         self.commands = {}
