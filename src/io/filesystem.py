@@ -3,11 +3,6 @@ import fileinput
 from src.io.stream import Stream
 
 
-class FileSystemFileNotExistError(ValueError):
-    def __init__(self, message):
-        super().__init__(f'File system error: file {message} doesn\'t exist')
-
-
 class FileSystem:
     @staticmethod
     def cd(path):
@@ -34,11 +29,8 @@ class FileSystem:
         :return: Stream, Stream object containing file content
         """
         stream = Stream()
-        try:
-            for line in fileinput.input(file_name):
-                stream.write_line(line.strip('\n'))
-        except FileNotFoundError:
-            raise FileSystemFileNotExistError(file_name)
+        for line in fileinput.input(file_name):
+            stream.write_line(line.strip('\n'))
         return stream
 
     @staticmethod
@@ -48,10 +40,7 @@ class FileSystem:
         :param file_name: str, path to the file
         :param stream: Stream
         """
-        try:
-            with open(file_name, 'w') as ouf:
-                for line in stream:
-                    ouf.write(line)
-                    ouf.write('\n')
-        except FileNotFoundError:
-            raise FileSystemFileNotExistError(file_name)
+        with open(file_name, 'w') as ouf:
+            for line in stream:
+                ouf.write(line)
+                ouf.write('\n')
