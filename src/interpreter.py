@@ -1,6 +1,8 @@
 from src.io.stream import Stream
 from src.parser.command_parser import CommandParser
 import src.command as commands
+from src.command.external import ExternalCommandError
+from src.io.filesystem import FileSystemFileNotExistError
 
 
 class InterpreterState:
@@ -35,7 +37,12 @@ class Interpreter:
             commands = self.parser.parse(command_text)
             stream = Stream()
             for com in commands:
-                stream = com.execute(stream)
+                try:
+                    stream = com.execute(stream)
+                except ExternalCommandError:
+                    print('Invalid command')
+                except FileSystemFileNotExistError as e:
+                    print(e)
             if Interpreter().state.should_exit:
                 print('bye')
                 break
