@@ -23,12 +23,23 @@ class CommandParser:
         self.commands[command_name] = command_class
 
     def build_command(self, command_name, command_args):
+        """
+        Creates appropriate instance of Command
+        :param command_name: str
+        :param command_args: list[str]
+        :return: ShellCommand
+        """
         if command_name in self.commands:
             return self.commands[command_name](*command_args)
         else:
             return self.external_command(command_name, *command_args)
 
     def tokenize(self, command_text):
+        """
+        Splits command text into tokens
+        :param command_text: str
+        :return: list[Token]
+        """
         tokens = shlex.shlex(command_text)
         tokens.wordchars += '$_-./'
         token_items = []
@@ -42,6 +53,11 @@ class CommandParser:
         return token_items
 
     def substitute(self, token):
+        """
+        Applies variable substitutions to token
+        :param token: str
+        :return: str
+        """
         while True:
             var = re.search(r'\$\w+', token)
             if not var:
@@ -52,6 +68,12 @@ class CommandParser:
         return token
 
     def check_assignment(self, command_text, tokens):
+        """
+        Decides whether command is variable assignment and applies it if so
+        :param command_text: str
+        :param tokens: list[Token]
+        :return: bool
+        """
         if len(tokens) != 3:
             return False
         if tokens[1].content != '=':
