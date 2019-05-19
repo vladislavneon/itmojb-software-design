@@ -7,7 +7,7 @@ class CCat(ShellCommand):
     """
     ShellCommand implementation for 'cat' command
     """
-    def execute(self, in_stream):
+    def execute(self, in_stream, interpreter_state=None):
         if len(self.args) == 0:
             raise CommandInvalidArgumentsError(f'"cat" takes 1 argument, given 0')
         file_name = self.args[0]

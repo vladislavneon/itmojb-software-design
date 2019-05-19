@@ -7,7 +7,7 @@ class CWc(ShellCommand):
     """
     ShellCommand implementation for 'wc' command
     """
-    def execute(self, in_stream):
+    def execute(self, in_stream, interpreter_state=None):
         if self.args:
             file_name = self.args[0]
             in_stream = FileSystem.read_file(file_name)

@@ -8,23 +8,22 @@ class InterpreterState:
     def __init__(self):
         self.should_exit = False
 
-class Interpreter:
-    def __new__(cls):
-        if not getattr(cls, 'instance', None):
-            obj = super().__new__(cls)
-            obj.state = InterpreterState()
-            obj.parser = CommandParser()
-            obj.parser.add_command('echo', commands.echo.CEcho)
-            obj.parser.add_command('cat', commands.cat.CCat)
-            obj.parser.add_command('pwd', commands.pwd.CPwd)
-            obj.parser.add_command('exit', commands.exit.CExit)
-            obj.parser.add_command('wc', commands.wc.CWc)
-            obj.parser.add_command('grep', commands.grep.CGrep)
-            cls.instance = obj
-        return cls.instance
+    def get_should_exit(self):
+        return self.should_exit
 
+    def set_should_exit(self, val):
+        self.should_exit = val
+
+class Interpreter:
     def __init__(self):
-        pass
+        self.state = InterpreterState()
+        self.parser = CommandParser()
+        self.parser.add_command('echo', commands.echo.CEcho)
+        self.parser.add_command('cat', commands.cat.CCat)
+        self.parser.add_command('pwd', commands.pwd.CPwd)
+        self.parser.add_command('exit', commands.exit.CExit)
+        self.parser.add_command('wc', commands.wc.CWc)
+        self.parser.add_command('grep', commands.grep.CGrep)
 
     def execute(self, command_text):
         """
@@ -32,14 +31,15 @@ class Interpreter:
         :param command_text: str, string of commands
         :return: Stream, output stream
         """
-        self.state.should_exit = False
+        self.state.set_should_exit(False)
         commands = self.parser.parse(command_text)
         stream = Stream()
         try:
             for com in commands:
-                stream = com.execute(stream)
-            if Interpreter().state.should_exit:
+                stream = com.execute(stream, self.state)
+            if self.state.get_should_exit():
                 print('bye')
+                return
             print(stream, end='')
         except ExternalCommandError:
             print('Invalid command')
@@ -51,9 +51,9 @@ class Interpreter:
         """
         Runs interpreter.
         """
-        self.state.should_exit = False
+        self.state.set_should_exit(False)
         while True:
             command_text = input().strip()
             self.execute(command_text)
-            if self.state.should_exit:
+            if self.state.get_should_exit():
                 break

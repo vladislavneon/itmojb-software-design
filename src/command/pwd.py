@@ -7,7 +7,7 @@ class CPwd(ShellCommand):
     """
     ShellCommand implementation for 'pwd' command
     """
-    def execute(self, in_stream):
+    def execute(self, in_stream, interpreter_state=None):
         ous = Stream()
         ous.write_line(FileSystem.cwd())
         return ous

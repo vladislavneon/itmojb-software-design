@@ -13,7 +13,7 @@ class ExternalCommand(ShellCommand):
     """
     ShellCommand implementation for any unknown (external) command
     """
-    def execute(self, in_stream):
+    def execute(self, in_stream, interpreter_state=None):
         try:
             result = sbpr.run(
                 self.args,

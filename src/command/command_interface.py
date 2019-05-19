@@ -21,10 +21,11 @@ class ShellCommand(ABC):
         self.args = args
 
     @abstractmethod
-    def execute(self, in_stream):
+    def execute(self, in_stream, interpreter_state):
         """
         Executes the command using `in_stream` as input data and returns output data as Stream object.
         :param in_stream: Stream, input stream
+        :param interpreter_state: InterpreterState
         :return: Stream, output stream
         """
         return Stream()

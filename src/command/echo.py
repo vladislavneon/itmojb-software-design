@@ -6,7 +6,7 @@ class CEcho(ShellCommand):
     """
     ShellCommand implementation for 'echo' command
     """
-    def execute(self, in_stream):
+    def execute(self, in_stream, interpreter_state=None):
         ous = Stream()
         ous.write_line(' '.join(self.args))
         return ous
