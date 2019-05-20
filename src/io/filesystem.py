@@ -29,8 +29,9 @@ class FileSystem:
         :return: Stream, Stream object containing file content
         """
         stream = Stream()
-        for line in fileinput.input(file_name):
-            stream.write_line(line.strip('\n'))
+        with fileinput.input(file_name) as inf:
+            for line in inf:
+                stream.write_line(line.strip('\n'))
         return stream
 
     @staticmethod
