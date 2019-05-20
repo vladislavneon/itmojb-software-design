@@ -19,6 +19,7 @@ class InterpreterState:
     def set_should_exit(self, val):
         self.should_exit = val
 
+
 class Interpreter:
     def __init__(self):
         self.state = InterpreterState()
