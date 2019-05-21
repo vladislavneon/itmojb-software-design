@@ -1,5 +1,5 @@
 import re
-from argparse import ArgumentParser
+from argparse import ArgumentParser, ArgumentTypeError
 from src.command.command_interface import ShellCommand
 from src.io.stream import Stream
 from src.io.filesystem import FileSystem
@@ -56,6 +56,9 @@ class CGrep(ShellCommand):
             compiled_pattern = re.compile(pattern, flags=re.IGNORECASE)
         else:
             compiled_pattern = re.compile(pattern)
+
+        if self.arguments.A < 0:
+            raise ArgumentTypeError('number of lines must be non-negative')
 
         lines = [line for line in stream]
         res = []
