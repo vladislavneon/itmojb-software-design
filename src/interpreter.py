@@ -56,6 +56,8 @@ class Interpreter:
             stream.write_line('Invalid command')
         except FileNotFoundError as e:
             stream.write_line(str(e))
+        except Exception as e:
+            stream.write_line(str(e))
         return stream
 
     def run(self):
